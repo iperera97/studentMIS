@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{# not showing header & footer #}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "authentication/css/login.css" %}">
+{% endblock %}
+
+{# main content goes here #}
+{% block main %}
+
+<div class="container">
+  <div class="row valign-wrapper">
+      <div class="col">
+            <form action="{% url 'auth:login' %}" method="POST" id="login_form" autocomplete="off">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-content">
+                        {% if loginErrors %}
+                            {% for err in  loginErrors %}
+                               <div class="text-center alert alert-danger">{{err}}</div>
+                            {% endfor %}
+                        {% endif %}
+                        {% for field in loginForm %}
+                            <div class="input-field input">
+                                <label class="mt-2 mb-2" for="{{field.id_for_label}}">{{field.label}}</label>
+                                {{field}}
+                                {% for err in field.errors %}
+                                    <span class="alert alert-danger mt-1 mb-1 pt-1 pb-1 text-center d-block">{{err}}</span>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="card-action">
+                        <button class="btn waves-effect waves-light" value="login" name='login'>Login
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

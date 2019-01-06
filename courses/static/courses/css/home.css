@@ -1,0 +1,16 @@
+#createCourseForm .err {
+    margin: 5px 0; 
+}
+
+#createCourseForm .err span {
+    display: block;
+    padding: 4px 30px;
+    color: #fff;
+    margin: 4px 0;
+}
+
+#course_table td{
+    padding: 8px 0;
+}
+
+

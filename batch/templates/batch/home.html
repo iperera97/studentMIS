@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    {% comment %} load head {% endcomment %}
+    {{ block.super }}
+
+    {% comment %} load styles {% endcomment %}
+    {% block styles %}
+        <link rel="stylesheet" href="{% static "batch/css/home.css" %}">
+    {% endblock %}
+{% endblock %}
+
+
+
+{% block main %}
+<main>
+    {% include "inc/messages.html" %}    
+
+    <div class="row">
+        <div class="col s12 actions">
+            <button class="btn waves-effect">
+                <a class="modal-trigger" data-target="addBatch">Add Batch</a>
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12" style="padding:0 25px">  
+            <table class="highlight responsive-table" id="batch_table">
+                <tr>
+                    <th style="width: 10%;">#</th>
+                    <th style="width: 15%">Name</th>
+                    <th style="width: 15%">Start date</th>
+                    <th style="width: 10%">Status</th>
+                    <th style="width: 10%" class="center">Maximum Student Count</th>
+                    <th style="width: 10%" class="center">Active Students Count</th>
+                    <th style="width: 25%" class="center">Actions</th>
+                </tr>
+                {% if not batchList %}
+                    <tr>
+                        <td colspan="7" class="center">Batches not found.. create new batch</td>
+                    </tr>
+                {% else %}
+                    {% for batch in batchList %}
+                        <tr>
+                            <td>{{batch.id|upper}}</td>
+                            <td>{{batch.name|upper}}</td>
+                            <td>{{batch.register|upper}}</td>
+                            <td>{% if batch.active %} ACTIVE {% else %} DEACTIVATED{% endif %}</td>
+                            <td class="center">{{batch.maximum_student_count}}</td>
+                            <td class="center">0</td>
+                            <td class="right">
+                                <button class="btn btn-small green darken-1">
+                                    <a>View</a>
+                                </button>
+                                <button class="btn btn-small teal lighten-1">
+                                    <a href="{% url 'courses:batch:edit' course_slug batch.slug %}">Edit</a>
+                                </button> 
+                                <button class="btn btn-small red lighten-1" id="batch_remove">
+                                    <a href="{% url 'courses:batch:remove' course_slug batch.slug %}">Remove</a>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+            <div class="pagination" style="padding: 20px 0">
+                <div class="step-links">
+                    <div class='prev'>
+                        {% if batchList.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{batchList.previous_page_number }}">previous</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="current">
+                        Page {{batchList.number}} of {{batchList.paginator.num_pages}}.
+                    </div>
+
+                    <div class="last">
+                        {% if batchList.has_next %}
+                            <a href="?page={{batchList.next_page_number }}">next</a>
+                            <a href="?page={{batchList.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="addBatch" class="modal">
+        <div class="modal-content">
+            <div class="row">
+                <h5 class="center">Add New Batch</h5>
+                <form autocomplete="off" id="create_batch_form" actions="{% url 'courses:batch:create' courseName|slugify %}" method="POST">
+                    {% csrf_token %}
+                    {% for field  in batchform %}
+                        {% if field.name != 'active' %}
+                            <div class="input-field">
+                                <label for="{{field.id_for_label}}">{{field.label}}</label>
+                                {{field}}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="input-field">
+                        <label>
+                            {{batchform.active}}
+                            <span>active</span>
+                        </label>
+                    </div>
+                    <div class="input-field center" style="margin: 80px 0 0 0">
+                        <button type="submit" class="btn center" style="padding : 5px 10px !important"/>
+                            Add Batch to {{courseName}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect btn red lighten-1">close</a>
+        </div>
+    </div>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static "batch/js/home.js" %}"></script>
+{% endblock  %}

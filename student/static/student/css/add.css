@@ -1,0 +1,21 @@
+.gender_list li {
+    display: inline-block;
+    margin: 5px 10px !important;
+}
+
+.submit-div button {
+    display: block;
+    margin: 0 auto;
+    float: right;
+}
+
+#student_form .err {
+    margin: 5px 0; 
+}
+
+#student_form .err span {
+    display: block;
+    padding: 4px 30px;
+    color: #fff;
+    margin: 4px 0;
+}

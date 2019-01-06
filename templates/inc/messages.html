@@ -1,0 +1,13 @@
+<div class="row messages">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="col s12">
+            {% if message.tags == 'success' %}
+                <span class="notify teal lighten-1">{{message}}</span>
+                {% elif message.tags == 'error' %}
+                    <span class="notify red lighten-1">{{message}}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>

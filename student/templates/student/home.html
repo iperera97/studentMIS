@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+    {% comment %} load head {% endcomment %}
+    {{ block.super }}
+
+    {% comment %} load styles {% endcomment %}
+    {% block styles %}
+        {{block.super}}
+        <link rel="stylesheet" href="{% static "student/css/home.css" %}">
+    {% endblock %}
+{% endblock %}
+
+
+
+{% block main %}
+<main>
+
+    <!-- student actions -->
+    <div class="row">
+        <div class="col s12">
+            <div class="actions">
+                <button class="waves-effect btn blue-grey darken-3">
+                    <a class="modal-trigger" href="{% url 'student:add' %}">Add Student</a>
+                </button>
+            </div>
+         </div>
+    </div>
+
+    {% include "inc/messages.html" %}
+
+        <div class="row">
+            <div class="col s12" style="padding: 0 25px">
+                <table class="highlight responsive-table" id="student_table">
+                    <tr>
+                        <th style="width: 10%">#</th>
+                        <th style="width: 10%">Title</th>
+                        <th style="width: 15%">First Name</th>
+                        <th style="width: 20%">Email</th>
+                        <th style="width: 10%">Gender</th>
+                        <th class="center" style="width: 25%">Actions</th>
+                    </tr>
+                    {% if student_list %}
+                        {% for student in student_list %}
+                            <tr>
+                                <td>{{student.pk}}</td>
+                                <td>{{student.title}}</td>
+                                <td>{{student.first_name}}</td>
+                                <td>{{student.email| lower}}</td>
+                                <td>
+                                    {% if student.gender %}
+                                        MALE
+                                    {% else %}
+                                        FEMALE
+                                    {% endif %}
+                                </td>
+                                <td class="right">
+                                    <button class="btn btn-small green darken-1">
+                                        <a href=''>View</a>
+                                    </button>
+                                    <button class="btn btn-small teal lighten-1">
+                                        <a href=''>Edit</a>
+                                    </button>
+                                    <button id="course_remove_btn" class="btn btn-small red lighten-1">
+                                        <a href=''>Remove</a>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="center">Courses not found.. please create a course</td>
+                        </tr>
+                    {% endif %}
+                </table>
+
+                {% comment %} pagination {% endcomment %}
+                <div class="pagination">
+                    <div class="step-links">
+                        <div class="prev">
+                            {% if student_list.has_previous %}
+                                <a href="?page=1">&laquo; first</a>
+                                <a href="?page={{ student_list.previous_page_number }}">previous</a>
+                            {% endif %}
+                        </div>
+                        <div class="current">
+                            <p>Page {{ student_list.number }} of {{ student_list.paginator.num_pages }}.</p>
+                        </div>
+
+                        <div class="last">
+                            {% if student_list.has_next %}
+                                <a href="?page={{ student_list.next_page_number }}">next</a>
+                                <a href="?page={{ student_list.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</main>
+{% endblock %}

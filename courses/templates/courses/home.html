@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+    {% comment %} load head {% endcomment %}
+    {{ block.super }}
+
+    {% comment %} load styles {% endcomment %}
+    {% block styles %}
+        <link rel="stylesheet" href="{% static "courses/css/home.css" %}">
+    {% endblock %}
+{% endblock %}
+
+
+{% block main %}
+    <main>
+
+        {% comment %} load messages {% endcomment %}
+        {% include "inc/messages.html" %}
+
+        <!-- course actions -->
+        <div class="row">
+            <div class="col s12">
+                <div class="actions">
+                    <button class="waves-effect btn blue-grey darken-3">
+                        <a class="modal-trigger" href="#create_studentModal">Create Course</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- courase table -->
+        <div class="row">
+            {% comment %} search and other related actions {% endcomment %}
+        </div>
+        <div class="row">
+            <div class="col s12" style="padding: 0 25px">
+                <table class="highlight responsive-table" id="course_table">
+                    <tr>
+                        <th style="width: 10%">#</th>
+                        <th style="width: 15%">Title</th>
+                        <th style="width: 20%">Level</th>
+                        <th style="width: 20%">Duration</th>
+                        <th style="width: 5%">Active Batches</th>
+                        <th style="width: 20%" class="center">Actions</th>
+                    </tr>
+                    {% if course_list %}
+                        {% for record in course_list %}
+                            <tr>
+                                <td>{{record.pk}}</td>
+                                <td>{{record.title| upper}}</td>
+                                <td>{{record.level | upper}}</td>
+                                <td>{{record.duration_year| upper}}</td>
+                                <td>
+                                    <span class="new badge blue-grey darken-3" data-badge-caption="">{{record.countActiveBatch}}</span>
+                                </td>
+                                <td class="right">
+                                    <button class="btn btn-small green darken-1">
+                                        <a href='{% url 'courses:view' record.title|slugify %}'>View</a>
+                                    </button>
+                                    <button class="btn btn-small teal lighten-1">
+                                        <a href='{% url 'courses:edit' record.title|slugify %}'>Edit</a>
+                                    </button>
+                                    <button id="course_remove_btn" class="btn btn-small red lighten-1">
+                                        <a href='{% url 'courses:delete' record.title|slugify %}'>Remove</a>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="center">Courses not found.. please create a course</td>
+                        </tr>
+                    {% endif %}
+                </table>
+
+                {% comment %} pagination {% endcomment %}
+                <div class="pagination">
+                    <div class="step-links">
+                        <div class="prev">
+                            {% if course_list.has_previous %}
+                                <a href="?page=1">&laquo; first</a>
+                                <a href="?page={{ course_list.previous_page_number }}">previous</a>
+                            {% endif %}
+                        </div>
+                        <div class="current">
+                            <p>Page {{ course_list.number }} of {{ course_list.paginator.num_pages }}.</p>
+                        </div>
+
+                        <div class="last">
+                            {% if course_list.has_next %}
+                                <a href="?page={{ course_list.next_page_number }}">next</a>
+                                <a href="?page={{ course_list.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Structure (Create Course)-->
+        <div id="create_studentModal" class="modal" >
+            <div class="modal-content">
+                <div class="row">
+                    <h4 class="center">Create new Course</h4>
+                    <form novalidate action="{% url 'courses:home' %}" method='POST' autocomplete="off" id='createCourseForm'>
+                        {% csrf_token %}
+                        {% for field in createCouresForm %}
+
+                            {% comment %} if levels field {% endcomment %}
+                            {% if field.name == 'level' %}
+                                <div class="input-field col-12">
+                                    {{field}}
+                                </div>
+                            {% else %}
+                                <div class="input-field col-12">
+                                    <label for='{{field.id_for_label}}'>{{field.label}}</label>
+                                    {{field}}
+                                </div>
+                            {% endif %}
+
+                            {% comment %} show errors {% endcomment %}
+                            {% for err in field.errors %}
+                                {{err}}
+                            {% endfor %}
+
+                        {% endfor %}
+                        <div class="input-field col-12" style="text-align: center">
+                            <button type="submit" class="btn waves-effect waves-light green darken-1" style="padding: 5px 10px !important;"type="submit" name="action">Create Course
+                            </button>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+            <div class="modal-footer">
+                <button class="btn waves-effect red lighten-1">
+                    <a href="" class="modal-close">Close</a>
+                </button>
+            </div>
+        </div>
+    </main>
+{% endblock main %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static "courses/js/home.js" %}"></script>
+{% endblock  %}

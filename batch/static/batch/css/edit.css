@@ -1,0 +1,10 @@
+.err span {
+    display: block;
+    color: #fff;
+    background: #EF5350 !important;
+    text-align: center;
+}
+
+form {
+    padding: 10px 0;
+}

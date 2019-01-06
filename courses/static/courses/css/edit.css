@@ -1,0 +1,7 @@
+#editCourseform .err span {
+    display: block;
+    padding: 4px 30px;
+    color: #fff;
+    margin: 4px 0;
+}
+

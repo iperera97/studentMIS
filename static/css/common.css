@@ -1,0 +1,113 @@
+body {
+    box-sizing: border-box;
+    -webkot-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background-color: #fafafa;
+}
+
+a {
+    color: #fff;
+}
+
+li {
+    list-style-type: none;
+}
+
+button {
+    line-height: 0 !important;
+    padding: 0px !important;
+}
+
+button a {
+    padding: 10px 15px;
+}
+
+main {
+    padding: 20px 0;
+}
+
+/* flash messages */
+.messages .notify {
+    display: block;
+    color: #fff;
+    padding: 5px 20px;
+    margin: 4px 0;
+}
+
+/* drop down header (user) */
+#user_dropdown {
+    width: 176px !important;
+    left: 1174.66px !important;
+    top: 10px !important;
+}
+
+/* page item heading */
+.item-heading {
+    color: #fff;
+    background: #26a69a !important;
+    padding: 10px 20px;
+}
+
+
+/* actions buttons  */
+.actions {
+    text-align: right;
+}
+
+.actions button {
+    background: #37474f !important;
+}
+
+/*  page title */
+.pageTitle .card-content {
+    padding: 5px !important;
+}
+
+/* sweat alert */
+.swal-modal button {
+    padding: 20px !important;
+}
+
+.swal-modal .swal-text {
+    text-align: center !important;
+    font-size: 14px !important;
+}
+
+.swal-modal button.swal-button--confirm {
+    background: #26a69a !important;
+    color: #fff;
+}
+
+.swal-modal button.swal-button--cancel {
+    background: #43A047 !important;
+    color: #fff;
+}
+
+
+/* pagination */
+.pagination {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.pagination .prev,
+.pagination .current,
+.pagination .last {
+    display: inline-block;
+}
+ 
+.pagination .last a {
+    color: #1565c0;
+}
+
+.pagination .prev a {
+    color: #00897b;
+}
+
+.pagination .current p {
+    color: black;
+}
+
+.card-action {
+    border-top: 2px solid #fff !important;
+}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    {% comment %} load head {% endcomment %}
+    {{ block.super }}
+
+    {% comment %} load styles {% endcomment %}
+    {% block styles %}
+        <link rel="stylesheet" href="{% static "courses/css/course.css" %}">
+    {% endblock %}
+{% endblock %}
+
+{% block main %}
+<main>
+
+    <!-- course actions -->
+    <div class="row">
+        <div class="col s12">
+            <div class="actions">
+                <button class="waves-effect btn blue-grey darken-3">
+                    <a class="modal-trigger" href="{% url 'courses:batch:home' course.slug %}">View Batches</a>
+                </button>
+            </div>
+         </div>
+    </div>
+
+    {% include "inc/messages.html" %}
+
+    <div class="container">
+
+    <div class="row">
+        <div class="col s12">
+            <ul class="collection with-header">
+                <li class="collection-header teal lighten-1">
+                    <h5 class="center" style="color: #fff">{{course.name|upper}}</h5>
+                </li>
+                <li class="collection-item">
+                    <div>ID
+                        <span class="right">#{{course.id}}</span>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>TITLE
+                        <span class="right">{{course.title|upper}}</span>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>LEVEL
+                        <span class="right">{{course.level|upper}}</span>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>FEE
+                        <span class="right">{{course.fee|floatformat:2}}</span>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>INSTALLMENT
+                        <span class="right">{{course.installment}}</span>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>INSTALLMENT FEE
+                        <span class="right">{{course.installmentFee|floatformat:2}}</span>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>REGISTER DATE
+                        <span class="right">{{course.register}}</span>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>DURATION
+                        <span class="right">{{course.duration_year|upper}}</span>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>TOTAL BATCHES
+                        <span class="right">{{course.totalBatch}}</span>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>ACTIVE BATCHES
+                        <span class="right">{{course.countActiveBatch}}</span>
+                    </div>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+
+
+    </div>
+</main>
+{% endblock %}

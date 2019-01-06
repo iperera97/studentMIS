@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+    {% comment %} load head {% endcomment %}
+    {{ block.super }}
+
+    {% comment %} load styles {% endcomment %}
+    {% block styles %}
+        {{block.super}}
+        <link rel="stylesheet" href="{% static "student/css/add.css" %}">
+    {% endblock %}
+{% endblock %}
+
+
+
+{% block main %}
+<main>
+
+    <!-- student actions -->
+    <div class="row">
+        <div class="col s12">
+            <div class="actions">
+                <button class="waves-effect btn blue-grey darken-3">
+                    <a class="modal-trigger" href="{% url 'student:add' %}">Add Student</a>
+                </button>
+            </div>
+         </div>
+    </div>
+
+    {% include "inc/messages.html" %}
+
+    <div class="container">
+        <form id="student_form" actions="{% url 'student:add' %}" method="POST" novalidate>
+            <div class="row">
+                <h5>Student Details</h5>
+                {% csrf_token %}
+                {% for field in student_form  %}
+                    <div class="col s12 m6">
+                        <div class="input-field">
+                            {% if field.label == "Title" or field.label == "Gender" %}
+                                {% else %}
+                                <label>{{field.label}}</label>
+                            {% endif %}
+                            {% if field.label == 'Gender' %}
+                                <ul class="gender_list">
+                                    <li>
+                                        <label>
+                                            {{field.1.tag}}
+                                            <span>{{field.1.choice_label}}</span>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            {{field.2.tag}}
+                                            <span>{{field.2.choice_label}}</span>
+                                        </label>
+                                    </li>
+                                </ul>
+                                {% else %}
+                                {{field}}
+                            {% endif %}
+                        </div>
+                        {% comment %} show errors {% endcomment %}
+                        <div class="err">
+                            {% for err in field.errors %}
+                                <span class="red lighten-1">{{err}}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div id="mgt_form">{{ registration_formset.management_form }}</div>
+                <div id="empty_form">
+                    <div class="row">
+                        {% for field in registration_formset.empty_form %}
+                            <div class="col s12 m4">
+                                <div class="input-field">
+                                    {% if field.label != 'Id' %}
+                                        <label>{{field.label}}</label>
+                                    {% endif %}
+                                    {{field}}
+                                    
+                                    {% comment %} show errors {% endcomment %}
+                                    <div class="err">
+                                        {% for err in field.errors %}
+                                            <span class="red lighten-1">{{err}}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <h5>Registration</h5>
+                <div class="reg_form">
+                    {% for regform in registration_formset %}
+                        <div class="row">
+                            {% for field in regform %}
+                                <div class="col s12 m4">
+                                    <div class="input-field">
+                                        {% if field.label != 'Id' %}
+                                            <label>{{field.label}}</label>
+                                        {% endif %}
+                                        {{field}}
+                                    </div>
+                                    
+                                    {% comment %} show errors {% endcomment %}
+                                    <div class="err">
+                                        {% for err in field.errors %}
+                                            <span class="red lighten-1">{{err}}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form_actions">
+                    <button id="add_reg" class="btn green" style="padding: 5px 10px !important;">+</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="submit-div">
+                    <button style="padding: 5px 10px !important;" class="center btn waves-effect waves-light green darken-1 white-text" type="submit">Add Student</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static "student/js/add.js" %}"></script>
+{% endblock  %}

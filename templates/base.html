@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{# head goes here #}
+{% block head %}
+    {% include "inc/head.html" %}
+{% endblock %}
+
+<body>
+
+{# header goes here #}
+{% block header %}
+    {% include "layouts/header.html" %}
+{% endblock %}
+
+{# main block goes here #}
+{% block main %} {% endblock %}
+
+{# footer goes here #}
+{% block footer %}
+    {% include "layouts/footer.html" %}
+{% endblock %}
+
+{# scripts goes here #}
+{% block scripts %}
+    {% include "inc/common.js.html" %}
+{% endblock %}
+
+</body> 
+</html>

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    <main>
+        {% comment %} load messages {% endcomment %}
+        {% include "inc/messages.html" %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="card teal lighten-2">
+                        <div class="card-content white-text">
+                            <span class="center card-title"><h5>Student Count</h5></span>
+                            <h1 class="center">{{model_count.student}}</h1>
+                        </div>
+                        <div class="card-action">
+                            <a class="white-text" href="{% url 'student:home' %}">Go to Student</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="card green lighten-1">
+                        <div class="card-content white-text">
+                            <span class="center card-title"><h5>Course Count</h5></span>
+                            <h1 class="center">{{model_count.course}}</h1>
+                        </div>
+                        <div class="card-action">
+                            <a class="white-text" href="{% url 'courses:home' %}">Go to Course</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="card deep-orange lighten-1">
+                        <div class="card-content white-text">
+                            <span class="center card-title"><h5>Active Batch Count</h5></span>
+                            <h1 class="center">{{model_count.batch}}</h1>
+                        </div>
+                        <div class="card-action">
+                            <a class="white-text" href="{% url 'courses:home' %}">Go to batches</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static "dashboard/js/home.js" %}"></script>
+{% endblock %}

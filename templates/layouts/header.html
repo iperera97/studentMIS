@@ -1,0 +1,61 @@
+<header>
+    <div class="wrapper">
+        <div class="row" style="margin: 0">
+            <div class="col s12" style="padding: 0">
+                <ul id="user_dropdown" class="dropdown-content" style="width: 400px !important">
+                    <li><a class="center" href="#!">Profile</a></li>
+                    <li><a class="center" href="#!">Settings</a></li>
+                    <li><a class="center" href="{% url "auth:logout" %}">Logout</a></li>
+                </ul>
+                <nav class="light-blue darken-4">
+                    <div class="nav-wrapper ">
+                        <div class="left">
+                            <a href="#" data-target="slide-out" class="sidenav-trigger show-on-medium-and-up">
+                                <i class="material-icons">menu</i>
+                            </a>                
+                        </div>
+                        <ul class="right hide-on-med-and-down">
+                            <li>
+                                <a class="main_nav_dropdown" data-target="user_dropdown" >    
+                                    Hi {{user.email}} !
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="col s12">
+                <div class="card whight pageTitle">
+                    <div class="card-content">
+                        <h6 class="center">
+                            <span class="light-blue-text darken-4">{{pageTitle.0 |capfirst}}</span> 
+                            {% if pageTitle.1 %}
+                                / {{pageTitle.1 |capfirst}}                    
+                            {% endif %} 
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<!-- NAVBAR -->
+<ul id="slide-out" class="sidenav">
+    <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+    <li><a href="{% url 'courses:home' %}">Courses</a></li>
+    <li><a href="{% url 'student:home' %}">Students</a></li>
+    <li><a href="{% url "auth:logout" %}">Logout</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+

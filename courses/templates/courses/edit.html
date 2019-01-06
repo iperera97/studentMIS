@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+    {% comment %} load head {% endcomment %}
+    {{ block.super }}
+
+    {% comment %} load styles {% endcomment %}
+    {% block styles %}
+        {{block.super}}
+        <link rel="stylesheet" href="{% static "courses/css/edit.css" %}">
+    {% endblock %}
+{% endblock %}
+
+
+{% block main %}
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="item-heading">
+                        <h5 class="center">{{courseEdit.title.value|upper}} Course</h5>
+                    </div>
+                    <form action="" method="POST" id="editCourseform">
+                        <div class="row">
+                            {% csrf_token %}
+                            {% for field in courseEdit %}
+                                <div class='col s12 m6 input-field'>
+                                    <label for="{{field.id_for_label}}">{{field.label}}</label>
+                                    {{field}}
+                                    <div class="err">
+                                        {% for err in field.errors %}
+                                            <span class="red lighten-1">{{err}}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class='col s12' style='text-align: right'>
+                                <button class="btn waves-effect waves-light teal lighten-1" style="padding: 5px 10px !important" type="submit" name="action">
+                                    Edit Course
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
